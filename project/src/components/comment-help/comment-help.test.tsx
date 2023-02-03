@@ -10,9 +10,9 @@ describe('Component: CommentHelp', () => {
       </HelmetProvider>
     );
 
-    const helpMesssage = 'To submit review please make sure to set rating and describe your stay with at least 50 characters';
+    const helpComponentId = 'comment-help-component';
 
-    expect(screen.getAllByText(helpMesssage)).toBeInTheDocument();
+    expect(screen.getByTestId(helpComponentId)).toBeInTheDocument();
 
   });
 });

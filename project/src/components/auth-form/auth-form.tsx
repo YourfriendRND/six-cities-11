@@ -58,6 +58,7 @@ const AuthForm = (): JSX.Element => {
           name="email"
           placeholder="Email"
           required
+          data-testid="Email"
         />
       </div>
       <div className="login__input-wrapper form__input-wrapper">
@@ -69,6 +70,7 @@ const AuthForm = (): JSX.Element => {
           name="password"
           placeholder="Password"
           required
+          data-testid="Password"
         />
       </div>
       {incorrectField ? <AuthFormErrorMessage incorrectField={incorrectField} /> : undefined}
