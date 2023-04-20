@@ -20,6 +20,7 @@ const CommentPlaceRating = ({ currentRating, onChangeRatingHandler, isDisabled }
         checked={currentRating === PlaceRating[rating]}
         onChange={onChangeRatingHandler}
         disabled={isDisabled}
+        data-testid="rating-star"
       />
       <label htmlFor={`${PlaceRating[rating]}-stars`} className="reviews__rating-label form__rating-label" title={rating}>
         <svg className="form__star-image" width="37" height="33">
