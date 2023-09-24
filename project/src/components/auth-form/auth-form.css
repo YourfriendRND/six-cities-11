@@ -1,0 +1,13 @@
+.form__sign-up-button {
+  margin-top: 15px;
+  padding: 16px 20px 13px;
+  background-color: #4481c3;
+  color: #fff;
+  border-radius: 3px;
+  width: 100%;
+}
+
+.form__sign-up-button:hover {
+  background-color: #3069a6;
+}
+

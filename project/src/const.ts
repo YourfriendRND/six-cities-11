@@ -1,4 +1,4 @@
-const Limits = {
+export const Limits = {
   CardQtyOnPage: 5,
   MaxPlaceRating: 5,
   MaxPhotosOnPage: 6,
@@ -9,20 +9,26 @@ const Limits = {
   ErrorDeleteTimeout: 5000,
 };
 
-enum AppRoute {
+export enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Room = '/offer/:id'
+  Room = '/offer/:id',
+  SignUp = '/signup',
 }
 
-enum UserAuthStatus {
+export enum UserAuthStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'Unknown'
 }
 
-const PlaceRating: {
+export enum UserValidationParams {
+  MinPasswordLength = 6,
+  MaxPasswordLength = 12,
+}
+
+export const PlaceRating: {
   [rating: string]: number;
 } = {
   'perfect': 5,
@@ -32,71 +38,56 @@ const PlaceRating: {
   'terribly': 1
 };
 
-const DEFAULT_CITY = 'Paris';
+export const DEFAULT_CITY = 'Paris';
 
-const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-const DEFAULT_SORT_TYPE = 'Popular';
+export const DEFAULT_SORT_TYPE = 'Popular';
 
-const SortType = {
+export const SortType = {
   Popular: DEFAULT_SORT_TYPE,
   LowToHigh: 'Price: low to high',
   HighToLow: 'Price: high to low',
   Rating: 'Top rated first'
 };
 
-enum AppPageName {
+export enum AppPageName {
   Main = 'Main',
   Favorites = 'Favorites',
   Room = 'Room',
 }
 
-const PlaceCardSize = {
+export const PlaceCardSize = {
   favoriteCardSize: 150,
   mainCardWidth: 260,
   mainCardHeight: 200
 };
 
-const SERVER_URL = 'https://11.react.pages.academy/six-cities';
+//const SERVER_URL = 'https://11.react.pages.academy/six-cities';
 
-enum APIRoutes {
-  Offers = '/hotels',
-  Login = '/login',
+export const SERVER_URL = 'http://localhost:5000';
+
+export enum APIRoutes {
+  Offers = '/offers',
+  SignUp = 'user/register',
+  Login = 'user/login',
   Logout = '/logout',
   Reviews = '/comments',
   Favorite = '/favorite'
 }
 
-enum ServerResponseActions {
+export enum ServerResponseActions {
   NoContent = 'empty',
   Ready = 'ready',
   Error = 'error',
   Loading = 'loading'
 }
 
-enum NameSpaces {
+export enum NameSpaces {
   User = 'USER',
   Offer = 'OFFER',
   Favorite = 'FAVORITE',
   Review = 'REVIEW',
 }
 
-const UNKNOWN_ACTION = 'UNKNOWN_ACTION';
-
-export {
-  DEFAULT_CITY,
-  CITIES,
-  DEFAULT_SORT_TYPE,
-  SERVER_URL,
-  UNKNOWN_ACTION,
-  SortType,
-  AppRoute,
-  UserAuthStatus,
-  PlaceRating,
-  AppPageName,
-  PlaceCardSize,
-  APIRoutes,
-  ServerResponseActions,
-  Limits,
-  NameSpaces
-};
+export const UNKNOWN_ACTION = 'UNKNOWN_ACTION';

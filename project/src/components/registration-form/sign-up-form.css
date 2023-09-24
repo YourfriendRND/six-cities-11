@@ -1,0 +1,27 @@
+.sign-up__form {
+  position: relative;
+  z-index: 1;
+  width: 341px;
+}
+
+.sign-up__input-wrapper {
+  margin-right: 2px;
+  margin-bottom: 24px;
+}
+
+.sign-up__input {
+  width: 100%;
+}
+
+.sign-up__submit {
+  width: 100%;
+}
+
+.sign-up__input--avatar {
+  display: block;
+  cursor: pointer;
+}
+
+.sign-up__text-upload {
+  color: #818181;
+}

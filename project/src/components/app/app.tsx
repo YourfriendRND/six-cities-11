@@ -12,6 +12,7 @@ import { getFavoriteOffers } from '../../store/favorite-offers-process/selectors
 import { getUserAuthStatus } from '../../store/user-process/selectors';
 import { useEffect } from 'react';
 import { fetchFavoriteOffers } from '../../store/api-actions';
+import SignUpScreen from '../../pages/registration-screen/sign-up-screen';
 
 const App = (): JSX.Element => {
   const favoriteOffers = useAppSelector(getFavoriteOffers);
@@ -35,6 +36,7 @@ const App = (): JSX.Element => {
         <Routes>
           <Route path={AppRoute.Main} element={<StartScreen />} />
           <Route path={AppRoute.Login} element={<AuthScreen />} />
+          <Route path={AppRoute.SignUp} element={<SignUpScreen />} />
           <Route path={AppRoute.Favorites} element={
             <PrivateRoute userAuthStatus={userAuthStatus}>
               <FavoritesScreen offers={favoriteOffers} />

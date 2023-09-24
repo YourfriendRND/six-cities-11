@@ -1,11 +1,13 @@
+import './auth-form.css';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
 import AuthFormErrorMessage from '../auth-form-error-message/auth-form-error-message';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { login } from '../../store/api-actions';
 import { checkPasswordValidation } from '../../util';
 import { getLoginErrorStatus } from '../../store/user-process/selectors';
 import { setLoginError } from '../../store/user-process/user-process';
-import { Limits } from '../../const';
+import { AppRoute, Limits } from '../../const';
 
 const AuthForm = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -78,6 +80,12 @@ const AuthForm = (): JSX.Element => {
         disabled={isSubmitButtonDisabled()}
       >Sign in
       </button>
+      <Link
+        className="form__sign-up-button button"
+        to={AppRoute.SignUp}
+      >
+        Sign up
+      </Link>
     </form>
   );
 };

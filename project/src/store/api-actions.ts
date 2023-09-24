@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch } from '../types/state';
 import { State } from './../types/state';
 import { Offer } from '../types/offers-type';
-import { User, UserLogin } from '../types/user-type';
+import { CreatedUser, User, UserLogin } from '../types/user-type';
 import { CommentTemplateType } from '../types/reviews-type';
 import { APIRoutes } from '../const';
 import { dropToken, saveToken } from '../services/token';
@@ -27,6 +27,15 @@ export const checkLogin = createAsyncThunk<User, undefined, RequestSettings>(
   'user/checkLogin',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<User>(APIRoutes.Login);
+    return data;
+  }
+);
+
+export const createUser = createAsyncThunk<User, CreatedUser, RequestSettings>(
+  'user/signUp',
+  async (createdUser, { extra: api }) => {
+    const { data } = await api.post<User>(APIRoutes.SignUp, createdUser);
+    saveToken(data.token);
     return data;
   }
 );
