@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpaces } from '../../const';
 import { UserProcess } from '../../types/state';
 import { UserAuthStatus } from '../../const';
-import { createUser, checkLogin, login, logout } from '../api-actions';
+import { createUser, checkLogin, login } from '../api-actions';
+import { dropToken } from '../../services/token';
 
 const initialState: UserProcess = {
   authorizationStatus: UserAuthStatus.Unknown,
@@ -16,6 +17,11 @@ export const userProcess = createSlice({
   reducers: {
     setLoginError: (state, action: PayloadAction<boolean>) => {
       state.loginErrorStatus = action.payload;
+    },
+    logoutUser: (state) => {
+      dropToken();
+      state.user = null;
+      state.authorizationStatus = UserAuthStatus.NoAuth;
     }
   },
   extraReducers(builder) {
@@ -41,12 +47,12 @@ export const userProcess = createSlice({
       .addCase(login.rejected, (state) => {
         state.authorizationStatus = UserAuthStatus.NoAuth;
         state.loginErrorStatus = true;
-      })
-      .addCase(logout.fulfilled, (state) => {
-        state.authorizationStatus = UserAuthStatus.NoAuth;
-        state.user = null;
       });
+    // .addCase(logout.fulfilled, (state) => {
+    //   state.authorizationStatus = UserAuthStatus.NoAuth;
+    //   state.user = null;
+    // });
   }
 });
 
-export const { setLoginError } = userProcess.actions;
+export const { setLoginError, logoutUser } = userProcess.actions;

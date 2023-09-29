@@ -10,13 +10,15 @@ type SignInProp = {
 
 const SignIn = ({ authStatus }: SignInProp): JSX.Element => {
   const user = useAppSelector(getUser);
+  // eslint-disable-next-line no-console
+  console.log(user);
   const favorites = useAppSelector(getFavoriteOffers);
   return UserAuthStatus.Auth === authStatus && user
     ? (
       <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
         <div className="header__avatar-wrapper user__avatar-wrapper">
         </div>
-        <span className="header__user-name user__name">{user.email}</span>
+        <span className="header__user-name user__name">{user.name}</span>
         <span className="header__favorite-count">{favorites.length}</span>
       </Link>
     )

@@ -19,6 +19,8 @@ export const fetchOffers = createAsyncThunk<Offer[], undefined, RequestSettings>
   'offer/fetchOffers',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<Offer[]>(APIRoutes.Offers);
+    // eslint-disable-next-line no-console
+    console.log(data);
     return data;
   }
 );
@@ -35,6 +37,8 @@ export const createUser = createAsyncThunk<User, CreatedUser, RequestSettings>(
   'user/signUp',
   async (createdUser, { extra: api }) => {
     const { data } = await api.post<User>(APIRoutes.SignUp, createdUser);
+    // eslint-disable-next-line no-console
+    console.log(data);
     saveToken(data.token);
     return data;
   }

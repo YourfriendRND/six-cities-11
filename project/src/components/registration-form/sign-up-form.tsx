@@ -22,7 +22,6 @@ const SignUpForm = (): JSX.Element => {
       name: String(data.name),
       email: String(data.email),
       password: String(data.password),
-      isPro: false
     }));
   });
 

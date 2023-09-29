@@ -9,14 +9,15 @@ import SortForm from '../../components/sort-form/sort-form';
 import CityPlacesStub from '../../components/city-places-stub/city-places-stub';
 import { AppPageName, CITIES, ServerResponseActions } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks/store';
-import { getCurrentCity, getCurrentSort, getActivePlaceCardId, getFilteredOffers, getOffersLoadingStatus } from '../../store/offers-process/selectors';
+import { getCurrentCity, getCurrentSort, getActivePlaceCardId, getFilteredOffers, getOfferLoadedStatus } from '../../store/offers-process/selectors';
 import { getSortOffer } from '../../util';
 import useServerAction from '../../hooks/useServerAction';
 import { fetchOffers } from '../../store/api-actions';
 
 const StartScreen = (): JSX.Element => {
   const offers = useAppSelector(getFilteredOffers);
-  const isOffersLoading = useAppSelector(getOffersLoadingStatus);
+  // const isOffersLoading = useAppSelector(getOffersLoadingStatus);
+  const isOfferLoaded = useAppSelector(getOfferLoadedStatus);
   const currentCity = useAppSelector(getCurrentCity);
   const activePlaceCardId = useAppSelector(getActivePlaceCardId);
   const placeCount = offers.length;
@@ -26,13 +27,15 @@ const StartScreen = (): JSX.Element => {
 
   useEffect(() => {
     let isComponentMounted = true;
-    if (isComponentMounted && !offers.length && !isOffersLoading) {
+    if (isComponentMounted && !isOfferLoaded) {
+      // eslint-disable-next-line no-console
+      console.log('start');
       dispatch(fetchOffers());
     }
     return () => {
       isComponentMounted = false;
     };
-  }, [dispatch, offers, isOffersLoading]);
+  }, [dispatch, offers, isOfferLoaded]);
 
   const action = useServerAction(offers);
   return (

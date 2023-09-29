@@ -16,6 +16,5 @@ export type CreatedUser = {
   name: string;
   email: string;
   password: string;
-  isPro: false;
   avatar?: string;
 }

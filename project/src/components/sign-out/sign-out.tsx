@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { logout } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks/store';
+import { logoutUser } from '../../store/user-process/user-process';
 
 const SignOut = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const handleLogoutButtonClick = () => {
-    dispatch(logout());
+    dispatch(logoutUser());
   };
 
   return (
