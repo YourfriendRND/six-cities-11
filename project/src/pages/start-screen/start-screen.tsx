@@ -30,14 +30,18 @@ const StartScreen = (): JSX.Element => {
     if (isComponentMounted && !isOfferLoaded) {
       // eslint-disable-next-line no-console
       console.log('start');
-      dispatch(fetchOffers());
+      dispatch(fetchOffers(currentCity));
     }
     return () => {
       isComponentMounted = false;
     };
-  }, [dispatch, offers, isOfferLoaded]);
+  }, [dispatch, offers, isOfferLoaded, currentCity]);
 
+  // eslint-disable-next-line no-console
+  console.log(offers);
   const action = useServerAction(offers);
+  // eslint-disable-next-line no-console
+  console.log(action);
   return (
     <div className="page page--gray page--main">
       <Helmet>

@@ -6,7 +6,7 @@ import { fetchOffers, fetchOffer, changeFavoriteOfferStatus, fetchNearbyOffers }
 const initialState: OfferProcess = {
   currentCity: DEFAULT_CITY,
   sortOfferType: DEFAULT_SORT_TYPE,
-  activePlaceCardId: 0,
+  activePlaceCardId: '',
   activePlaceCoordinates: null,
   offers: [],
   isOffersLoading: false,
@@ -27,7 +27,7 @@ export const offerProcess = createSlice({
     setSortType: (state, action: PayloadAction<string>) => {
       state.sortOfferType = action.payload;
     },
-    setActivePlaceCardId: (state, action: PayloadAction<number>) => {
+    setActivePlaceCardId: (state, action: PayloadAction<string>) => {
       state.activePlaceCardId = action.payload;
     },
     setActivePlaceCoordinates: (state, action: PayloadAction<{ lat: number; lng: number } | null>) => {
@@ -55,11 +55,25 @@ export const offerProcess = createSlice({
         state.currentOfferError = true;
       })
       .addCase(changeFavoriteOfferStatus.fulfilled, (state, action) => {
-        state.currentOffer = action.payload;
-        state.offers = state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer);
-        state.nearbyOffers = state.nearbyOffers.find((offer) => offer.id === action.payload.id)
-          ? state.nearbyOffers.map((offer) => offer.id === action.payload.id ? action.payload : offer)
-          : state.nearbyOffers;
+        const currentFavoriteOffer = action.payload.find((offer) => offer.id === state.currentOffer?.id);
+
+        // eslint-disable-next-line no-console
+        // console.log('currentFavoriteOffer', currentFavoriteOffer);
+
+        if (state.currentOffer) {
+          state.currentOffer.isFavorite = Boolean(currentFavoriteOffer);
+        }
+
+        state.offers = state.offers.map((offer) => {
+          const existOffer = action.payload.find((favoriteOffer) => favoriteOffer.id === offer.id);
+          return existOffer ? existOffer : {...offer, isFavorite: false};
+        });
+
+
+        // state.currentOffer = action.payload;
+        // state.nearbyOffers = state.nearbyOffers.find((offer) => offer.id === action.payload.id)
+        //   ? state.nearbyOffers.map((offer) => offer.id === action.payload.id ? action.payload : offer)
+        //   : state.nearbyOffers;
       })
       .addCase(fetchNearbyOffers.fulfilled, (state, action) => {
         state.nearbyOffers = action.payload;

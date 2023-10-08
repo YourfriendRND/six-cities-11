@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import PageHeader from '../../components/page-header/page-header';
-import SignUpForm from '../../components/registration-form/sign-up-form';
+import SignUpForm from '../../components/sign-up-form/sign-up-form';
 import { getUserAuthStatus } from '../../store/user-process/selectors';
 import { UserAuthStatus, AppRoute } from '../../const';
 import './sign-up-screen.css';

@@ -12,7 +12,7 @@ export type UserProcess = {
 export type OfferProcess = {
   currentCity: string;
   sortOfferType: string;
-  activePlaceCardId: number;
+  activePlaceCardId: string;
   activePlaceCoordinates: {
     lat: number;
     lng: number;

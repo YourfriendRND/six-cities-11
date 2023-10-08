@@ -11,7 +11,7 @@ import OfferInsideItem from '../../components/offer-inside-item/offer-inside-ite
 import Map from '../../components/map/map';
 import Spinner from '../../components/spinner/spinner';
 import { AppPageName, AppRoute, UserAuthStatus, Limits } from '../../const';
-import { changeFavoriteOfferStatus, fetchNearbyOffers, fetchOffer, fetchReviews } from '../../store/api-actions';
+import { changeFavoriteOfferStatus, fetchOffer } from '../../store/api-actions';
 import { useAppSelector, useAppDispatch } from '../../hooks/store';
 import { getCurrentOffer, getNerbyOffers, getCurrentOfferErrorStatus } from '../../store/offers-process/selectors';
 import { getReviews } from '../../store/review-process/selectors';
@@ -23,7 +23,7 @@ import './room-screen.css';
 const RoomScreen = (): JSX.Element => {
   const queryParam = useParams();
   const navigate = useNavigate();
-  const id = Number(queryParam.id);
+  const id = String(queryParam.id);
 
   const currentOffer = useAppSelector(getCurrentOffer);
   const reviews = useAppSelector(getReviews);
@@ -48,8 +48,8 @@ const RoomScreen = (): JSX.Element => {
     if (isComponentMounted) {
       window.scrollTo(0, 0);
       dispatch(fetchOffer(id));
-      dispatch(fetchReviews(id));
-      dispatch(fetchNearbyOffers(id));
+      //dispatch(fetchReviews(id));
+      //dispatch(fetchNearbyOffers(id));
     }
     return () => {
       isComponentMounted = false;
@@ -60,7 +60,7 @@ const RoomScreen = (): JSX.Element => {
     return <UnexistScreen />;
   }
 
-  return currentOffer && reviews && nearbyOffers.length ? (
+  return currentOffer && reviews ? (
     <div className="page">
       <Helmet>
         <title>6 cities. Room overview</title>

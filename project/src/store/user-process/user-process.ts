@@ -3,7 +3,7 @@ import { NameSpaces } from '../../const';
 import { UserProcess } from '../../types/state';
 import { UserAuthStatus } from '../../const';
 import { createUser, checkLogin, login } from '../api-actions';
-import { dropToken } from '../../services/token';
+import { dropToken, getToken } from '../../services/token';
 
 const initialState: UserProcess = {
   authorizationStatus: UserAuthStatus.Unknown,
@@ -39,6 +39,10 @@ export const userProcess = createSlice({
       })
       .addCase(checkLogin.rejected, (state) => {
         state.authorizationStatus = UserAuthStatus.NoAuth;
+        const token = getToken();
+        if (token) {
+          dropToken();
+        }
       })
       .addCase(login.fulfilled, (state, action) => {
         state.authorizationStatus = UserAuthStatus.Auth;

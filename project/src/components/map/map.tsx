@@ -11,9 +11,9 @@ type MapProp = {
   city: Location;
   points: {
     locations: Location;
-    id: number;
+    id: string;
   }[];
-  selectedPlaceId: number;
+  selectedPlaceId: string;
   isMainPage: boolean;
 }
 

@@ -2,12 +2,13 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch } from '../types/state';
 import { State } from './../types/state';
-import { Offer } from '../types/offers-type';
+import { Offer, ServerExactOffer, ServerOffer } from '../types/offers-type';
 import { CreatedUser, User, UserLogin } from '../types/user-type';
 import { CommentTemplateType } from '../types/reviews-type';
 import { APIRoutes } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { Review } from '../types/reviews-type';
+import { adaptExactOfferFromServer, adaptOffersFromServer } from './api-adapter';
 
 type RequestSettings = {
   dispatch: AppDispatch;
@@ -15,13 +16,11 @@ type RequestSettings = {
   state: State;
 };
 
-export const fetchOffers = createAsyncThunk<Offer[], undefined, RequestSettings>(
+export const fetchOffers = createAsyncThunk<Offer[], string, RequestSettings>(
   'offer/fetchOffers',
-  async (_arg, { extra: api }) => {
-    const { data } = await api.get<Offer[]>(APIRoutes.Offers);
-    // eslint-disable-next-line no-console
-    console.log(data);
-    return data;
+  async (cityName, { extra: api }) => {
+    const { data } = await api.get<ServerOffer[]>(`${APIRoutes.Offers}?city=${cityName}`);
+    return adaptOffersFromServer(data);
   }
 );
 
@@ -37,8 +36,6 @@ export const createUser = createAsyncThunk<User, CreatedUser, RequestSettings>(
   'user/signUp',
   async (createdUser, { extra: api }) => {
     const { data } = await api.post<User>(APIRoutes.SignUp, createdUser);
-    // eslint-disable-next-line no-console
-    console.log(data);
     saveToken(data.token);
     return data;
   }
@@ -61,11 +58,11 @@ export const logout = createAsyncThunk<void, undefined, RequestSettings>(
   }
 );
 
-export const fetchOffer = createAsyncThunk<Offer, number, RequestSettings>(
+export const fetchOffer = createAsyncThunk<Offer, string, RequestSettings>(
   'offer/fetchOffer',
   async (offerId, { extra: api }) => {
-    const { data } = await api.get<Offer>(`${APIRoutes.Offers}/${offerId}`);
-    return data;
+    const { data } = await api.get<ServerExactOffer>(`${APIRoutes.Offers}/${offerId}`);
+    return adaptExactOfferFromServer(data);
   }
 );
 
@@ -77,11 +74,7 @@ export const fetchNearbyOffers = createAsyncThunk<Offer[], number, RequestSettin
   }
 );
 
-export const fetchReviews = createAsyncThunk<Review[], number, {
-  dispatch: AppDispatch;
-  extra: AxiosInstance;
-  state: State;
-}>(
+export const fetchReviews = createAsyncThunk<Review[], number, RequestSettings>(
   'review/fetchReviews',
   async (offerId, { extra: api }) => {
     const { data } = await api.get<Review[]>(`${APIRoutes.Reviews}/${offerId}`);
@@ -100,17 +93,17 @@ export const sendComment = createAsyncThunk<Review[], CommentTemplateType, Reque
 export const fetchFavoriteOffers = createAsyncThunk<Offer[], undefined, RequestSettings>(
   'favorite/fetchFavoriteOffers',
   async (_arg, { extra: api }) => {
-    const { data } = await api.get<Offer[]>(APIRoutes.Favorite);
-    return data;
+    const { data } = await api.get<ServerOffer[]>(APIRoutes.Favorite);
+    return adaptOffersFromServer(data);
   }
 );
 
-export const changeFavoriteOfferStatus = createAsyncThunk<Offer, Offer, RequestSettings>(
+export const changeFavoriteOfferStatus = createAsyncThunk<Offer[], Offer, RequestSettings>(
   'favorite/changeFavoriteOfferStatus',
   async (offer, { extra: api }) => {
     const { id, isFavorite } = offer;
     const status = isFavorite ? 0 : 1;
-    const { data } = await api.post<Offer>(`${APIRoutes.Favorite}/${id}/${status}`, offer);
-    return data;
+    const { data } = await api.post<ServerOffer[]>(`${APIRoutes.Favorite}/${id}/${status}`, offer);
+    return adaptOffersFromServer(data);
   }
 );

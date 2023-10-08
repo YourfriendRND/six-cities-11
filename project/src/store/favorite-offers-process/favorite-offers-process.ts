@@ -22,9 +22,10 @@ export const favoriteOffersProcess = createSlice({
         state.favoriteLoadingErrorStatus = true;
       })
       .addCase(changeFavoriteOfferStatus.fulfilled, (state, action) => {
-        state.favorites = [...state.favorites, action.payload]
-          .map((offer) => offer.id === action.payload.id ? action.payload : offer)
-          .filter((offer) => offer.isFavorite);
+        state.favorites = [...action.payload];
+        // state.favorites = [...state.favorites, action.payload]
+        //   .map((offer) => offer.id === action.payload.id ? action.payload : offer)
+        //   .filter((offer) => offer.isFavorite);
       })
       .addCase(changeFavoriteOfferStatus.rejected, (state) => {
         state.changeFavoriteOfferStatusError = true;

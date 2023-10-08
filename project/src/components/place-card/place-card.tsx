@@ -31,7 +31,7 @@ const PlaceCard = ({ offer, pageName, isActive }: PlaceCardProp): JSX.Element =>
   };
 
   const handleCardMouseEventLeave = () => {
-    dispatch(setActivePlaceCardId(0));
+    dispatch(setActivePlaceCardId(''));
   };
 
   const handleFavoriteButtonClick = () => {

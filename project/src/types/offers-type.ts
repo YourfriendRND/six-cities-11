@@ -10,10 +10,10 @@ export type City = {
 };
 
 type Host = {
-  avatarUrl: string;
-  id: number;
-  isPro: boolean;
-  name: string;
+  avatarUrl?: string;
+  id: string;
+  isPro?: boolean;
+  name?: string;
 };
 
 export type Offer = {
@@ -22,7 +22,7 @@ export type Offer = {
   description: string;
   goods: string[];
   host: Host;
-  id: number;
+  id: string;
   images: string[];
   isFavorite: boolean;
   isPremium: boolean;
@@ -33,5 +33,34 @@ export type Offer = {
   rating: number;
   title: string;
   type: string;
+  publishDateTime: string;
+  commentCount: number;
 };
 
+export type ServerOffer = {
+  authorId: string;
+  city: string;
+  commentCount: number;
+  coordinates: {
+    latitude: string;
+    longitude: string;
+  };
+  description: string;
+  facilities: string[];
+  guestCount: number;
+  housingType: string;
+  id: string;
+  isPremium: boolean;
+  name: string;
+  photos: string[];
+  prevImageUrl: string;
+  price: number;
+  publishDate: string;
+  rating: number;
+  roomCount: number;
+  isFavorite: boolean;
+}
+
+export type ServerExactOffer = Exclude<ServerOffer, 'autorId'> & {
+  author: Host;
+}

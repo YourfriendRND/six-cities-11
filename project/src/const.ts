@@ -15,6 +15,8 @@ export enum AppRoute {
   Favorites = '/favorites',
   Room = '/offer/:id',
   SignUp = '/signup',
+  Profile = '/profile',
+  MyOffers = '/published'
 }
 
 export enum UserAuthStatus {
