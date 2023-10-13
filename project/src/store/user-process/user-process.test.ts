@@ -1,11 +1,12 @@
 import { userProcess, setLoginError } from './user-process';
 import { UserProcess } from '../../types/state';
-import { UNKNOWN_ACTION, UserAuthStatus } from '../../const';
+import { ProfileTabs, UNKNOWN_ACTION, UserAuthStatus } from '../../const';
 
 const initialState: UserProcess = {
   authorizationStatus: UserAuthStatus.Unknown,
   user: null,
   loginErrorStatus: false,
+  activeProfileTab: ProfileTabs.AboutMe,
 };
 
 describe('Reducer: user-process', () => {

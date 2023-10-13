@@ -1,0 +1,20 @@
+.profile__add-offer-button {
+  margin-right: 0;
+  margin-left: 75%;
+  width: 25%;
+  height: 34px;
+  border: 1px solid #3069a6;
+  border-radius: 5px;
+  background-color: #4481c3;
+  color: #fff;
+}
+
+.profile__add-offer-button:hover {
+  background-color: #3069a6;
+}
+
+.profile__add-offer-button--empty {
+  margin-top: 16.7vh;
+  margin-left: 0;
+  width: 80%;
+}

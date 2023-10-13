@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpaces } from '../../const';
+import { NameSpaces, ProfileTabs } from '../../const';
 import { UserProcess } from '../../types/state';
 import { UserAuthStatus } from '../../const';
 import { createUser, checkLogin, login } from '../api-actions';
@@ -9,6 +9,7 @@ const initialState: UserProcess = {
   authorizationStatus: UserAuthStatus.Unknown,
   user: null,
   loginErrorStatus: false,
+  activeProfileTab: ProfileTabs.AboutMe,
 };
 
 export const userProcess = createSlice({
@@ -22,6 +23,9 @@ export const userProcess = createSlice({
       dropToken();
       state.user = null;
       state.authorizationStatus = UserAuthStatus.NoAuth;
+    },
+    setActiveProfileTab: (state, action: PayloadAction<string>) => {
+      state.activeProfileTab = action.payload;
     }
   },
   extraReducers(builder) {
@@ -59,4 +63,4 @@ export const userProcess = createSlice({
   }
 });
 
-export const { setLoginError, logoutUser } = userProcess.actions;
+export const { setLoginError, logoutUser, setActiveProfileTab } = userProcess.actions;

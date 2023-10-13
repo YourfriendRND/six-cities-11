@@ -6,4 +6,6 @@ export const getUserAuthStatus = (state: State): string => state[NameSpaces.User
 
 export const getUser = (state: State): User | null => state[NameSpaces.User].user;
 
-export const getLoginErrorStatus = (state: State) => state[NameSpaces.User].loginErrorStatus;
+export const getLoginErrorStatus = (state: State): boolean => state[NameSpaces.User].loginErrorStatus;
+
+export const getActiveProfileTab = (state: State): string => state[NameSpaces.User].activeProfileTab;

@@ -67,7 +67,7 @@ export const PlaceCardSize = {
 
 //const SERVER_URL = 'https://11.react.pages.academy/six-cities';
 
-export const SERVER_URL = 'http://localhost:5000';
+export const SERVER_URL = 'http://localhost:4000';
 
 export enum APIRoutes {
   Offers = '/offers',
@@ -90,6 +90,13 @@ export enum NameSpaces {
   Offer = 'OFFER',
   Favorite = 'FAVORITE',
   Review = 'REVIEW',
+  Published = 'PUBLISHED',
 }
 
 export const UNKNOWN_ACTION = 'UNKNOWN_ACTION';
+
+export enum ProfileTabs {
+  AboutMe = 'About me',
+  MyPublications = 'My publications',
+  Favorites = 'Favorites',
+}

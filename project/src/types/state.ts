@@ -7,6 +7,7 @@ export type UserProcess = {
   authorizationStatus: string;
   user: User | null;
   loginErrorStatus: boolean;
+  activeProfileTab: string;
 };
 
 export type OfferProcess = {
@@ -38,6 +39,11 @@ export type ReviewProcess = {
   creationCommentErrorStatus: boolean;
   isCommentSent: boolean;
 };
+
+export type PublishedProcess = {
+  myOffers: Offer[];
+  isCreationFormOpen: boolean;
+}
 
 export type State = ReturnType<typeof store.getState>
 
