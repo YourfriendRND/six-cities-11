@@ -100,3 +100,7 @@ export enum ProfileTabs {
   MyPublications = 'My publications',
   Favorites = 'Favorites',
 }
+
+export const HOUSING_TYPES: string[] = ['apartment', 'house', 'room', 'hotel'];
+
+export const FACILITIES: string[] = ['Breakfast', 'Air conditioning', 'Laptop friendly workspace', 'Baby seat', 'Washer', 'Towels', 'Fridge'];
