@@ -97,8 +97,9 @@ const CreationOfferForm = (): JSX.Element => {
         />
       </div>
       <div className="sign-up__input-wrapper form__input-wrapper">
-        <ul className='places__options places__options--custom places__options--opened'>
-          {FACILITIES.map((item) => <li key={item} className='places__option places__option'>{item}</li>)}
+        <label>Check the available facilities for your place:</label>
+        <ul className='creation-offer-form__facilities-checkbox-list'>
+          {FACILITIES.map((item) => <li key={item} className='creation-offer-form__ficility-item'>{item}</li>)}
         </ul>
         <input
           {...register('facilities', { required: true })}

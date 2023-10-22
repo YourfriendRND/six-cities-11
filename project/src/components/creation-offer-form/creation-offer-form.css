@@ -70,3 +70,45 @@
   color: #4481c3;
   text-decoration: underline;
 }
+
+.creation-offer-form__facilities-checkbox-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  list-style: none;
+  grid-column-gap: 30px;
+  grid-row-gap: 10px;
+}
+
+.creation-offer-form__ficility-item,
+.creation-offer-form__ficility-item--checked {
+  position: relative;
+  padding: 5px;
+  padding-left: 20px;
+  cursor: pointer;
+}
+
+.creation-offer-form__ficility-item--checked::before {
+  content: "";
+  position: absolute;
+  background-image: url("../../../public/img/checked-box.svg");
+  background-repeat: no-repeat;
+  display: block;
+  width: 20px;
+  height: 20px;
+  left: -1px;
+  top: 5px;
+  cursor: pointer;
+}
+
+.creation-offer-form__ficility-item::before {
+  content: "";
+  position: absolute;
+  background-image: url("../../../public/img/checkbox.svg");
+  background-repeat: no-repeat;
+  display: block;
+  width: 20px;
+  height: 20px;
+  left: -1px;
+  top: 5px;
+  cursor: pointer;
+}

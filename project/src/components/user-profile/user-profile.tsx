@@ -9,7 +9,7 @@ const UserProfile = ({ user }: UserProfileProps): JSX.Element => (
   <div className="user-profile-container container">
     <div className='user-avatar'>
       <img className='avatar' src={user.avatarUrl ? user.avatarUrl : '../img/default-avatar.png'} width="170" height="170" alt="avatar" />
-      <div className="profile__user-status">{user.isPro ? 'Pro' : ''}</div>
+      {user.isPro ? <div className="profile__user-status">Pro</div> : null}
     </div>
 
     <div className='profile'>

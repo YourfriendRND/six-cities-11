@@ -11,8 +11,6 @@ type OfferListProp = {
 const OfferList = ({ offers, pageName }: OfferListProp): JSX.Element => {
   const activeCardId = useAppSelector(getActivePlaceCardId);
 
-  // eslint-disable-next-line no-console
-  console.log(offers);
   return (
     <>
       {offers.map((offer) => (
