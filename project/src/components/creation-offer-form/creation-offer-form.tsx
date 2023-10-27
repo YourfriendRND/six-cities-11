@@ -1,17 +1,23 @@
+/* eslint-disable no-console */
 import cn from 'classnames';
 import { ChangeEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { CITIES, FACILITIES, HOUSING_TYPES, DEFAULT_CITY } from '../../const';
+import { CITIES, FACILITIES, HOUSING_TYPES, DEFAULT_CITY, Limits } from '../../const';
 import './creation-offer-form.css';
+
 
 const CreationOfferForm = (): JSX.Element => {
   const TEXT = 'Upload preview image of your place';
   const { register } = useForm();
   const [citySelectStatus, changeCitySelectStatus] = useState(true);
   const [selectedCity, changeSelectedCity] = useState(DEFAULT_CITY);
-  const [previewImageValue, setPreviewImage] = useState(TEXT);
+  const [previewImageValue, setPreviewImage] = useState('');
+  const [, setPreviewFile] = useState<File | null>(null);
   const [housingTypeStatus, changeHousingTypeStatus] = useState(true);
   const [selectedHousingType, changeSelectedHousing] = useState(HOUSING_TYPES[0]);
+  const [checkedFacilities, setCheckedFacilities] = useState<string[]>([]);
+
+  const [photoCollection, setPhotoCollection] = useState<File[]>([]);
 
   const selectOfferCity = (city: string): void => {
     changeSelectedCity(city);
@@ -26,10 +32,33 @@ const CreationOfferForm = (): JSX.Element => {
   const changePrevieImageName = (evt: ChangeEvent<HTMLInputElement>): void => {
     // eslint-disable-next-line no-console
     console.log(evt.target.value.split('\\'));
-    const fileName = evt.target.value.split('\\').at(-1);
+    const fileName = evt.target.value;
+    if (evt.target.files) {
+      const file = evt.target.files[0];
+      setPreviewFile(file);
+      setPreviewImage(URL.createObjectURL(file));
+      return;
+    }
+    // .split('\\').at(-1);
     // eslint-disable-next-line no-console
     console.log(fileName);
     setPreviewImage(fileName ? fileName : TEXT);
+  };
+
+  const changePhotoCollection = (evt: ChangeEvent<HTMLInputElement>): void => {
+
+    console.log(evt);
+    console.log(evt.target.files);
+    if (evt.target.files) {
+      setPhotoCollection([...evt.target.files]);
+    }
+  };
+
+  const changeFacilityStatus = (facility: string): void => {
+    const isCheckedFacility = checkedFacilities.find((item) => item === facility);
+    isCheckedFacility
+      ? setCheckedFacilities(checkedFacilities.filter((item) => item !== facility))
+      : setCheckedFacilities([...checkedFacilities, facility]);
   };
 
   return (
@@ -61,11 +90,11 @@ const CreationOfferForm = (): JSX.Element => {
           onClick={() => changeCitySelectStatus(!citySelectStatus)}
         >
           <span>{selectedCity}</span>
-          <svg className={cn('creation-offer-form__select-arrow', {'creation-offer-form__select-arrow--active': !citySelectStatus})} width="9" height="6">
+          <svg className={cn('creation-offer-form__select-arrow', { 'creation-offer-form__select-arrow--active': !citySelectStatus })} width="9" height="6">
             <use xlinkHref="#icon-arrow-select"></use>
           </svg>
         </div>
-        <ul className={cn('creation-offer-form__select-list', {'visually-hidden': citySelectStatus}) }>
+        <ul className={cn('creation-offer-form__select-list', { 'visually-hidden': citySelectStatus })}>
           {CITIES.map((city) => <li key={city} className='places__option places__option' onClick={() => selectOfferCity(city)}>{city}</li>)}
         </ul>
         <input
@@ -82,11 +111,11 @@ const CreationOfferForm = (): JSX.Element => {
           onClick={() => changeHousingTypeStatus(!housingTypeStatus)}
         >
           <span>{selectedHousingType}</span>
-          <svg className={cn('creation-offer-form__select-arrow', {'creation-offer-form__select-arrow--active': !housingTypeStatus})} width="9" height="6">
+          <svg className={cn('creation-offer-form__select-arrow', { 'creation-offer-form__select-arrow--active': !housingTypeStatus })} width="9" height="6">
             <use xlinkHref="#icon-arrow-select"></use>
           </svg>
         </div>
-        <ul className={cn('creation-offer-form__select-list', {'visually-hidden': housingTypeStatus}) }>
+        <ul className={cn('creation-offer-form__select-list', { 'visually-hidden': housingTypeStatus })}>
           {HOUSING_TYPES.map((type) => <li key={type} className='places__option places__option' onClick={() => selectHousingType(type)}>{type}</li>)}
         </ul>
         <input
@@ -99,7 +128,19 @@ const CreationOfferForm = (): JSX.Element => {
       <div className="sign-up__input-wrapper form__input-wrapper">
         <label>Check the available facilities for your place:</label>
         <ul className='creation-offer-form__facilities-checkbox-list'>
-          {FACILITIES.map((item) => <li key={item} className='creation-offer-form__ficility-item'>{item}</li>)}
+          {FACILITIES.map((item) => {
+            const isCheckedItem = Boolean(checkedFacilities.find((facility) => facility === item));
+            return (
+              <li key={item} className={cn(
+                { 'creation-offer-form__ficility-item': !isCheckedItem },
+                { 'creation-offer-form__ficility-item--checked': isCheckedItem }
+              )}
+              onClick={() => changeFacilityStatus(item)}
+              >
+                {item}
+              </li>
+            );
+          })}
         </ul>
         <input
           {...register('facilities', { required: true })}
@@ -109,7 +150,43 @@ const CreationOfferForm = (): JSX.Element => {
         />
       </div>
       <div className="sign-up__input-wrapper form__input-wrapper">
-        <span>Preview: </span>
+        <label className='creation-offer-form__field-label'>Please, enter the number of rooms for your place (min 1, max 8): </label>
+        <input
+          {...register('roomCount', { required: true })}
+          className="sign-up__input form__input"
+          name="roomCount"
+          type="number"
+          placeholder="1"
+          max={8}
+          min={1}
+        />
+      </div>
+      <div className="sign-up__input-wrapper form__input-wrapper">
+        <label className='creation-offer-form__field-label'>Please, enter the maximum number of guests (min 1, max 10): </label>
+        <input
+          {...register('guestCount', { required: true })}
+          className="sign-up__input form__input"
+          name="roomCount"
+          type="number"
+          placeholder="3"
+          max={10}
+          min={1}
+        />
+      </div>
+      <div className="sign-up__input-wrapper form__input-wrapper">
+        <label className='creation-offer-form__field-label'>Please, enter the price of your offer (min 100, max 100 000): </label>
+        <input
+          {...register('price', { required: true })}
+          className="sign-up__input form__input"
+          name="roomCount"
+          type="number"
+          placeholder="5000"
+          max={100_000}
+          min={100}
+        />
+      </div>
+      <div className="sign-up__input-wrapper form__input-wrapper">
+        <span className='creation-offer-form__field-label'>Select preview image: </span>
         <input
           {...register('prevImageUrl')}
           id="preview"
@@ -119,39 +196,31 @@ const CreationOfferForm = (): JSX.Element => {
           onChange={changePrevieImageName}
           placeholder='sfdsdfdsf'
         />
-        <label htmlFor="preview" className="sign-up__input form__input sign-up__input--avatar">
-          <span className={cn('creation-offer-form__text-upload', {'creation-offer-form__selected-file-text': previewImageValue !== TEXT})}>
-            {previewImageValue}
-          </span>
+        <label htmlFor="preview" className="creation-offer-form__upload-preview">
+          <div className="creation-offer-form__upload-preview-wrapper creation-offer-form__upload-preview-wrapper--induced">
+            {previewImageValue ? <img src={previewImageValue} alt="preview" width="220" height="160" /> : null}
+          </div>
         </label>
       </div>
-      <div className="sign-up__input-wrapper form__input-wrapper">
+      <div className="sign-up__input-wrapper form__input-wrapper creation-offer-form__upload-photos-wrapper">
         <input
           {...register('photos')}
           id="photos"
           className="visually-hidden sign-up__input form__input"
           name="photos"
           type="file"
+          onChange={changePhotoCollection}
           multiple
         />
-        <label htmlFor="photos" className="sign-up__input form__input sign-up__input--avatar">
-          <span className="sign-up__text-upload">
-            Select photos of your place:
-          </span>
-        </label>
-      </div>
+        {Array.from({length: Limits.MaxPhotosOnPage}, (_, idx) => (
+          <label key={idx} htmlFor="photos" className="creation-offer-form__upload-preview">
+            <div className="creation-offer-form__upload-preview-wrapper creation-offer-form__upload-preview-wrapper--induced">
+              {photoCollection[idx] ? <img src={URL.createObjectURL(photoCollection[idx])} alt="preview" width="220" height="160" /> : null}
+            </div>
+          </label>
+        ))}
 
-      <div className="sign-up__input-wrapper form__input-wrapper">
-        <label>Number of guests</label>
-        <input
-          {...register('roomCount', { required: true })}
-          className="sign-up__input form__input"
-          name="roomCount"
-          type="number"
-          placeholder="3"
-        />
       </div>
-
       <div className="sign-up__input-wrapper form__input-wrapper">
         <input
           {...register('coordinates', { required: true })}
@@ -165,3 +234,10 @@ const CreationOfferForm = (): JSX.Element => {
 };
 
 export default CreationOfferForm;
+
+
+/*
+<span className={cn('creation-offer-form__text-upload', {'creation-offer-form__selected-file-text': previewImageValue !== TEXT})}>
+            {previewImageValue}
+          </span>
+*/

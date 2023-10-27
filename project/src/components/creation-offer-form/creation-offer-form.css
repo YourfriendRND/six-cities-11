@@ -85,6 +85,7 @@
   padding: 5px;
   padding-left: 20px;
   cursor: pointer;
+  width: max-content;
 }
 
 .creation-offer-form__ficility-item--checked::before {
@@ -112,3 +113,58 @@
   top: 5px;
   cursor: pointer;
 }
+
+.creation-offer-form__upload-photos-wrapper {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-row-gap: 15px;
+  align-items: center;
+}
+
+.creation-offer-form__upload-preview {
+  display: block;
+  cursor: pointer;
+  width: max-content;
+  justify-self: center;
+}
+
+.creation-offer-form__upload-preview-wrapper {
+  display: flex;
+  height: 160px;
+  width: 220px;
+  border: 1px solid #e6e6e6;
+  border-radius: 2px;
+  background-color: #fff;
+  position: relative;
+  background-color: rgb(245, 245, 245);
+  background-image: url('../../../public//img/plus.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 70px 70px;
+}
+
+.creation-offer-form__upload-preview-wrapper:hover::after {
+  position: absolute;
+  content: "Upload image";
+  font-size: 14px;
+  width: 218px;
+  height: 30px;
+  left: 0px;
+  top: 140px;
+  background-color: #e0e0e0;
+  text-align: center;
+  padding-top: 7px;
+  animation: ShowFromBottom 0.3s;
+}
+
+@keyframes ShowFromBottom {
+  from {
+    top: 145px;
+  }
+
+  to {
+    top: 140px;
+  }
+}
+
