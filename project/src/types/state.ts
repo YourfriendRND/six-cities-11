@@ -45,6 +45,15 @@ export type PublishedProcess = {
   isCreationFormOpen: boolean;
 }
 
+export type CreationFormProcess = {
+  name: string;
+  description: string;
+  city: string;
+  housingType: string;
+  facilities: string[];
+  roomCount: number;
+}
+
 export type State = ReturnType<typeof store.getState>
 
 export type AppDispatch = typeof store.dispatch

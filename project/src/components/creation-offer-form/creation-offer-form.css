@@ -3,6 +3,15 @@
   margin: 0 auto;
 }
 
+.creation-offer-form__input-wrapper {
+  margin-right: 2px;
+  margin-bottom: 24px;
+}
+
+.creation-offer-form__input {
+  width: 100%;
+}
+
 .creation-offer-form__field-label {
   margin-bottom: 10px;
   display: block;
@@ -114,6 +123,11 @@
   cursor: pointer;
 }
 
+.creation-offer-form__photos-title {
+  display: block;
+  margin-bottom: 15px;
+}
+
 .creation-offer-form__upload-photos-wrapper {
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -157,6 +171,33 @@
   padding-top: 7px;
   animation: ShowFromBottom 0.3s;
 }
+
+.creation-offer-form__submit-button {
+  margin-left: 28%;
+  width: 48%;
+  height: 42px;
+  border: 1px solid #3069a6;
+  border-radius: 5px;
+  background-color: #4481c3;
+  color: #fff;
+}
+
+.creation-offer-form__submit-button:hover {
+  background-color: #3069a6;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type='number'],
+input[type="number"]:hover,
+input[type="number"]:focus {
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
 
 @keyframes ShowFromBottom {
   from {

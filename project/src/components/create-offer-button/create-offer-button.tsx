@@ -5,9 +5,10 @@ import './create-offer-button.css';
 
 type CreateOfferButtonProps = {
   isEmptyPage: boolean;
+  type?: 'button' | 'submit';
 }
 
-const CreateOfferButton = ({ isEmptyPage }: CreateOfferButtonProps): JSX.Element => {
+const CreateOfferButton = ({ isEmptyPage, type }: CreateOfferButtonProps): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const offerCreationButtonHandle = (): void => {
@@ -18,6 +19,7 @@ const CreateOfferButton = ({ isEmptyPage }: CreateOfferButtonProps): JSX.Element
     <button
       className={`profile__add-offer-button ${isEmptyPage ? 'profile__add-offer-button--empty' : ''} button`}
       onClick={offerCreationButtonHandle}
+      type={type}
     >
     + Add new offer
     </button>

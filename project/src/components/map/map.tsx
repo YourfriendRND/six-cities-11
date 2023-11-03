@@ -15,9 +15,10 @@ type MapProp = {
   }[];
   selectedPlaceId: string;
   isMainPage: boolean;
+  isNewPlace?: boolean;
 }
 
-const Map = ({ city, points, selectedPlaceId, isMainPage }: MapProp): JSX.Element => {
+const Map = ({ city, points, selectedPlaceId, isMainPage, isNewPlace }: MapProp): JSX.Element => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
   const activeCardCoordinates = useAppSelector(getActivePlaceCoordinates);
@@ -41,6 +42,14 @@ const Map = ({ city, points, selectedPlaceId, isMainPage }: MapProp): JSX.Elemen
     icon: selectedPlaceId === point.id ? pinActive : pin,
   }));
 
+  const draggableMarker = isNewPlace ? leaflet.marker({
+    lat: city.latitude,
+    lng: city.longitude,
+  }, {
+    icon: pinActive,
+    draggable: true
+  }) : null;
+
   const addMarkersToCard = (markers: leaflet.Marker[], mapLayer: leaflet.Map) => markers.forEach((marker) => marker.addTo(mapLayer));
 
   const cleanMarkers = (markers: leaflet.Marker[]) => markers.forEach((marker) => marker.remove());
@@ -58,13 +67,18 @@ const Map = ({ city, points, selectedPlaceId, isMainPage }: MapProp): JSX.Elemen
         : city.zoom;
 
       addMarkersToCard(markerList, map);
+
+      if (draggableMarker) {
+        addMarkersToCard([draggableMarker], map);
+      }
+
       map.setView(centerCoordinates, currentZoom);
     }
     return () => {
       cleanMarkers(markerList);
       isComponentMounted = false;
     };
-  }, [map, markerList, city, activeCardCoordinates, isMainPage]);
+  }, [map, markerList, city, activeCardCoordinates, isMainPage, draggableMarker]);
 
   return (
     <section className={cn(
