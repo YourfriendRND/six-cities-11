@@ -9,7 +9,10 @@ export const Limits = {
   MaxCommentSymbols: 300,
   RequestTimeout: 5000,
   ErrorDeleteTimeout: 5000,
-  MaxOfferRoomCount: 8
+  MaxOfferRoomCount: 8,
+  MaxOfferGuestCount: 10,
+  MinOfferPrice: 100,
+  MaxOfferPrice: 100_000,
 };
 
 export enum AppRoute {

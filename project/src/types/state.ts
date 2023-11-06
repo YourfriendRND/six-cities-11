@@ -1,6 +1,6 @@
 import store from '../store/store';
 import { User } from './user-type';
-import { Offer } from './offers-type';
+import { Offer, Location } from './offers-type';
 import { Review } from './reviews-type';
 
 export type UserProcess = {
@@ -52,6 +52,11 @@ export type CreationFormProcess = {
   housingType: string;
   facilities: string[];
   roomCount: number;
+  guestCount: number;
+  price: number;
+  photos: File[];
+  previewImage: File | null;
+  coordinates: Location;
 }
 
 export type State = ReturnType<typeof store.getState>

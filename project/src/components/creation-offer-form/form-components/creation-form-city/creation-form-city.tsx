@@ -2,8 +2,8 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/store';
 import { getSelectedCity } from '../../../../store/creation-form-process/selectors';
-import { setCity } from '../../../../store/creation-form-process/creation-form-process';
-import { CITIES } from '../../../../const';
+import { setCity, setOfferCoordinates } from '../../../../store/creation-form-process/creation-form-process';
+import { CITIES, CitiesCenterLocation } from '../../../../const';
 import '../../creation-offer-form.css';
 
 const CreationFormCity = (): JSX.Element => {
@@ -13,6 +13,7 @@ const CreationFormCity = (): JSX.Element => {
 
   const handleSelectCity = (city: string): void => {
     dispatch(setCity(city));
+    dispatch(setOfferCoordinates(CitiesCenterLocation[city]));
     changeCitySelectStatus(!citySelectStatus);
   };
 

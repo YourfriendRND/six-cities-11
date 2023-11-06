@@ -4,8 +4,9 @@ import { useEffect, useRef } from 'react';
 import { Location } from '../../types/offers-type';
 import useMap from '../../hooks/useMap';
 import cn from 'classnames';
-import { useAppSelector } from '../../hooks/store';
+import { useAppSelector, useAppDispatch } from '../../hooks/store';
 import { getActivePlaceCoordinates } from '../../store/offers-process/selectors';
+import { setOfferCoordinates } from '../../store/creation-form-process/creation-form-process';
 
 type MapProp = {
   city: Location;
@@ -21,7 +22,9 @@ type MapProp = {
 const Map = ({ city, points, selectedPlaceId, isMainPage, isNewPlace }: MapProp): JSX.Element => {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const dispatch = useAppDispatch();
   const activeCardCoordinates = useAppSelector(getActivePlaceCoordinates);
+
 
   const pin = leaflet.icon({
     iconUrl: 'img/pin.svg',
@@ -47,7 +50,7 @@ const Map = ({ city, points, selectedPlaceId, isMainPage, isNewPlace }: MapProp)
     lng: city.longitude,
   }, {
     icon: pinActive,
-    draggable: true
+    draggable: true,
   }) : null;
 
   const addMarkersToCard = (markers: leaflet.Marker[], mapLayer: leaflet.Map) => markers.forEach((marker) => marker.addTo(mapLayer));
@@ -70,15 +73,28 @@ const Map = ({ city, points, selectedPlaceId, isMainPage, isNewPlace }: MapProp)
 
       if (draggableMarker) {
         addMarkersToCard([draggableMarker], map);
+        draggableMarker.addEventListener('dragend', (_evt: leaflet.DragEndEvent) => {
+          const latitude = draggableMarker.getLatLng().lat;
+          const longitude = draggableMarker.getLatLng().lng;
+          dispatch(setOfferCoordinates({
+            latitude,
+            longitude,
+            zoom: currentZoom,
+          }));
+        });
       }
 
       map.setView(centerCoordinates, currentZoom);
     }
     return () => {
+      if (draggableMarker) {
+        markerList.push(draggableMarker);
+      }
+
       cleanMarkers(markerList);
       isComponentMounted = false;
     };
-  }, [map, markerList, city, activeCardCoordinates, isMainPage, draggableMarker]);
+  }, [map, markerList, city, activeCardCoordinates, isMainPage, draggableMarker, dispatch]);
 
   return (
     <section className={cn(

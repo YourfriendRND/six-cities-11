@@ -107,3 +107,8 @@ export const changeFavoriteOfferStatus = createAsyncThunk<Offer[], Offer, Reques
     return adaptOffersFromServer(data);
   }
 );
+
+export const createOffer = createAsyncThunk(
+  'offer/create',
+  async () => {}
+);

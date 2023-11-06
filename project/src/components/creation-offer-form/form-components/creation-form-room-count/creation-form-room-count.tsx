@@ -9,7 +9,7 @@ const CreationFormRoomCount = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const roomCountValue = useAppSelector(getRoomCount);
 
-  const handleRoomCounChange = (evt: ChangeEvent<HTMLInputElement>): void => {
+  const handleRoomCountChange = (evt: ChangeEvent<HTMLInputElement>): void => {
     dispatch(setRoomCount(Number(evt.target.value)));
   };
 
@@ -22,7 +22,7 @@ const CreationFormRoomCount = (): JSX.Element => {
         type="number"
         placeholder="1"
         value={roomCountValue}
-        onChange={handleRoomCounChange}
+        onChange={handleRoomCountChange}
         max={Limits.MaxOfferRoomCount}
         min={1}
       />
