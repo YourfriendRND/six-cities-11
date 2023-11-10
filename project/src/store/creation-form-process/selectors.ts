@@ -1,6 +1,6 @@
 import { NameSpaces } from '../../const';
 import { Location } from '../../types/offers-type';
-import { State } from '../../types/state';
+import { CreationFormProcess, State } from '../../types/state';
 
 export const getName = (state: State): string => state[NameSpaces.Creation].name;
 
@@ -26,3 +26,5 @@ export const getCoordinatesAsText = (state: State): string => {
   const currentOfferCoordinates = state[NameSpaces.Creation].coordinates;
   return `${currentOfferCoordinates.latitude}; ${currentOfferCoordinates.longitude}`;
 };
+
+export const getCreatedFormOffer = (state: State): CreationFormProcess => state[NameSpaces.Creation];

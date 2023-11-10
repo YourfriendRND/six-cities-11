@@ -12,10 +12,11 @@ const CreationFormCoordinates = (): JSX.Element => {
     <Fragment>
       <div className="creation-offer-form__input-wrapper form__input-wrapper">
         <input
+          id='coordinates'
           className="creation-offer-form__input form__input"
           type="text"
           name="coordinates"
-          value={currentTextCoordinates}
+          defaultValue={currentTextCoordinates}
         />
       </div>
       <Map

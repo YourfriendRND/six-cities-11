@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import {Limits, SERVER_URL} from './../const';
 import { getToken } from './token';
 
-export const createAPI = (): AxiosInstance => {
+export const createAPI = (file?: boolean): AxiosInstance => {
   const api = axios.create({
     baseURL: SERVER_URL,
     timeout: Limits.RequestTimeout,
@@ -15,6 +15,12 @@ export const createAPI = (): AxiosInstance => {
       if (token && config.headers) {
         config.headers = {
           Authorization: `Bearer ${token}`,
+        };
+      }
+
+      if (file && config.headers) {
+        config.headers = {
+          'content-type': 'multipart/form-data',
         };
       }
 

@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+import { FormEvent } from 'react';
 import CreationFormName from './form-components/creation-form-name/creation-form-name';
 import CreationFormDescription from './form-components/creation-form-description/creation-form-description';
 import CreationFormCity from './form-components/creation-form-city/creation-form-city';
@@ -8,16 +10,29 @@ import CreationFormGuestCount from './form-components/creation-form-guest-count/
 import CreationFormPrice from './form-components/creation-form-price/creation-form-price';
 import CreationFormPhotoCollection from './form-components/creation-form-photo-collection/creation-form-photo-collection';
 import CreationFormCoordinates from './form-components/creation-form-coordinates/creation-form-coordinates';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
+import { getCreatedFormOffer } from '../../store/creation-form-process/selectors';
+import { createOffer } from '../../store/api-actions';
 import './creation-offer-form.css';
-import { FormEvent } from 'react';
 
 const CreationOfferForm = (): JSX.Element => {
-  const submitOfferCreation = (evt: FormEvent<HTMLButtonElement>): void => {
+  const dispatch = useAppDispatch();
+  const offer = useAppSelector(getCreatedFormOffer);
+  const submitOfferCreation = (evt: FormEvent): void => {
     evt.preventDefault();
+    const createdOffer = {
+      ...offer,
+      coordinates: {
+        latitude: String(offer.coordinates.latitude),
+        longitude: String(offer.coordinates.longitude),
+      }
+    };
+
+    dispatch(createOffer(createdOffer));
   };
 
   return (
-    <form className='creation-offer-form' action="">
+    <form className='creation-offer-form' onSubmit={submitOfferCreation} action="">
       <CreationFormName />
 
       <CreationFormDescription />
@@ -41,7 +56,6 @@ const CreationOfferForm = (): JSX.Element => {
       <button
         className='creation-offer-form__submit-button button'
         type='submit'
-        onSubmit={submitOfferCreation}
       >
           Create new offer
       </button>

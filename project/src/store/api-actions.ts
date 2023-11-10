@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch } from '../types/state';
+import { AppDispatch, CreationFormProcess } from '../types/state';
 import { State } from './../types/state';
 import { Offer, ServerExactOffer, ServerOffer } from '../types/offers-type';
 import { CreatedUser, User, UserLogin } from '../types/user-type';
@@ -108,7 +109,15 @@ export const changeFavoriteOfferStatus = createAsyncThunk<Offer[], Offer, Reques
   }
 );
 
-export const createOffer = createAsyncThunk(
+export const createOffer = createAsyncThunk<Offer, Omit<CreationFormProcess, 'coordinates'>, RequestSettings>(
   'offer/create',
-  async () => {}
+  async (createdOffer, {extra: fileApi}) => {
+    const { data } = await fileApi.post<ServerOffer>(`${APIRoutes.Offers}`, createdOffer);
+
+    console.log(data);
+
+    const [offer] = adaptOffersFromServer([data]);
+
+    return offer;
+  }
 );

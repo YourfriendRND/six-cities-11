@@ -10,8 +10,9 @@ import { getFakeUser, getFakeCommentTemplate, getFakeReview } from '../mock';
 
 describe('Async actions', () => {
   const api = createAPI();
+  const fileApi = createAPI(true);
   const mockAPI = new MockAdapter(api);
-  const middlewares = [thunk.withExtraArgument(api)];
+  const middlewares = [thunk.withExtraArgument({api, fileApi})];
 
   const mockStore = configureMockStore<
     State,
@@ -28,7 +29,7 @@ describe('Async actions', () => {
 
     expect(store.getActions()).toEqual([]);
 
-    await store.dispatch(checkLogin());
+    store.dispatch(checkLogin());
 
     const actions = store.getActions().map(({ type }) => type);
 
