@@ -116,30 +116,24 @@ export const changeFavoriteOfferStatus = createAsyncThunk<Offer[], Offer, Reques
 export const createOffer = createAsyncThunk<Offer, Omit<CreationFormProcess, 'coordinates'>, RequestSettings>(
   'offer/create',
   async (createdOffer, {extra: diff}) => {
-
-    console.log(createdOffer);
     const form = new FormData();
+    createdOffer.photos.forEach((imageValue) => {
+      form.append('photos', imageValue as unknown as Blob);
+    });
 
-    Object.entries(createdOffer).forEach(([key, value]) => {
-      if (key === 'previewImage') {
-        form.append(key, createdOffer.previewImage as Blob);
-        return;
-      }
+    const sendData = Object.entries(createdOffer).reduce((data: Record<string, string | string[] | number | File[]>, [key, value]) => {
 
       if (key === 'photos') {
-        form.append(key, createdOffer.photos as unknown as Blob);
-        return;
+        return data;
       }
 
-      form.append(key, String(value));
+      data[key] = value;
+      return data;
 
-    });
+    }, {});
 
-    const { data } = await diff.fileApi.post<ServerOffer>(`${APIRoutes.Offers}`, form, {
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
-    });
+    form.append('data', JSON.stringify(sendData));
+    const { data } = await diff.fileApi.post<ServerOffer>(`${APIRoutes.Offers}`, form);
 
     console.log(data);
 

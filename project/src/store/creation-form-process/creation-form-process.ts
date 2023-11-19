@@ -13,7 +13,6 @@ const initialState: CreationFormProcess = {
   guestCount: 1,
   price: Limits.MinOfferPrice,
   photos: [],
-  previewImage: null,
   coordinates: {
     latitude: CitiesCenterLocation[DEFAULT_CITY].latitude,
     longitude: CitiesCenterLocation[DEFAULT_CITY].longitude,
@@ -59,7 +58,6 @@ export const creationFormProcess = createSlice({
 
     setPhotos: (state, action: PayloadAction<File[]>): void => {
       state.photos = action.payload;
-      state.previewImage = action.payload[0];
     },
 
     setOfferCoordinates: (state, action: PayloadAction<Location>): void => {

@@ -20,6 +20,7 @@ export const createAPI = (file?: boolean): AxiosInstance => {
 
       if (file && config.headers) {
         config.headers = {
+          ...config.headers,
           'content-type': 'multipart/form-data',
         };
       }

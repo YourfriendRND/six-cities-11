@@ -55,7 +55,6 @@ export type CreationFormProcess = {
   guestCount: number;
   price: number;
   photos: File[];
-  previewImage: File | null;
   coordinates: Location;
 }
 
