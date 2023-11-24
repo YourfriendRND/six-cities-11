@@ -19,6 +19,7 @@ import { getUserAuthStatus } from '../../store/user-process/selectors';
 import { getPercent, adaptAppartmentType, compareDates } from '../../util';
 import cn from 'classnames';
 import './room-screen.css';
+import { setActivePlaceCardId } from '../../store/offers-process/offer-process';
 
 const RoomScreen = (): JSX.Element => {
   const queryParam = useParams();
@@ -35,7 +36,7 @@ const RoomScreen = (): JSX.Element => {
   const currentOfferErrorStatus = useAppSelector(getCurrentOfferErrorStatus);
   const dispatch = useAppDispatch();
 
-  const handleFavoriteButtonClick = () => {
+  const handleFavoriteButtonClick = (): void => {
     if (currentOffer && currentUserAuthStatus === UserAuthStatus.Auth) {
       dispatch(changeFavoriteOfferStatus(currentOffer));
       return;
@@ -53,6 +54,7 @@ const RoomScreen = (): JSX.Element => {
     }
     return () => {
       isComponentMounted = false;
+      dispatch(setActivePlaceCardId(''));
     };
   }, [id, dispatch]);
 

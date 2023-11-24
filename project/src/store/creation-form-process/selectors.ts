@@ -28,3 +28,5 @@ export const getCoordinatesAsText = (state: State): string => {
 };
 
 export const getCreatedFormOffer = (state: State): CreationFormProcess => state[NameSpaces.Creation];
+
+export const getCreatedOfferId = (state: State): string => state[NameSpaces.Creation].createdOfferId;

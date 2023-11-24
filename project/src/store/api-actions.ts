@@ -28,6 +28,14 @@ export const fetchOffers = createAsyncThunk<Offer[], string, RequestSettings>(
   }
 );
 
+export const fetchMyOffers = createAsyncThunk<Offer[], string, RequestSettings>(
+  'offer/myOffers',
+  async (_arg, {extra: diff}) => {
+    const { data } = await diff.api.get<ServerOffer[]>(APIRoutes.Offers);
+    return adaptOffersFromServer(data);
+  }
+);
+
 export const checkLogin = createAsyncThunk<User, undefined, RequestSettings>(
   'user/checkLogin',
   async (_arg, { extra: diff }) => {
@@ -35,7 +43,6 @@ export const checkLogin = createAsyncThunk<User, undefined, RequestSettings>(
     return data;
   }
 );
-
 
 export const createUser = createAsyncThunk<User, CreatedUser, RequestSettings>(
   'user/signUp',
@@ -134,11 +141,9 @@ export const createOffer = createAsyncThunk<Offer, Omit<CreationFormProcess, 'co
 
     form.append('data', JSON.stringify(sendData));
     const { data } = await diff.fileApi.post<ServerOffer>(`${APIRoutes.Offers}`, form);
+    const [ offer ] = adaptOffersFromServer([data]);
 
-    console.log(data);
-
-    const [offer] = adaptOffersFromServer([data]);
-
+    console.log('Предложение создано', offer);
     return offer;
   }
 );

@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CreationFormName from './form-components/creation-form-name/creation-form-name';
 import CreationFormDescription from './form-components/creation-form-description/creation-form-description';
 import CreationFormCity from './form-components/creation-form-city/creation-form-city';
@@ -12,12 +13,25 @@ import CreationFormPhotoCollection from './form-components/creation-form-photo-c
 import CreationFormCoordinates from './form-components/creation-form-coordinates/creation-form-coordinates';
 import { useAppDispatch, useAppSelector } from '../../hooks/store';
 import { getCreatedFormOffer } from '../../store/creation-form-process/selectors';
+import { getCreatedOfferId } from '../../store/creation-form-process/selectors';
+import { setActiveProfileTab } from '../../store/user-process/user-process';
 import { createOffer } from '../../store/api-actions';
+import { ProfileTabs } from '../../const';
 import './creation-offer-form.css';
 
 const CreationOfferForm = (): JSX.Element => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const offer = useAppSelector(getCreatedFormOffer);
+  const createdCardId = useAppSelector(getCreatedOfferId);
+
+  useEffect(() => {
+    if (createdCardId) {
+      dispatch(setActiveProfileTab(ProfileTabs.AboutMe));
+      navigate(`/offer/${createdCardId}`);
+    }
+  }, [createdCardId, navigate, dispatch]);
+
   const submitOfferCreation = (evt: FormEvent): void => {
     evt.preventDefault();
     const createdOffer = {
@@ -29,6 +43,7 @@ const CreationOfferForm = (): JSX.Element => {
     };
 
     dispatch(createOffer(createdOffer));
+
   };
 
   return (

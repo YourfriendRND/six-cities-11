@@ -2,8 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DEFAULT_CITY, NameSpaces, DEFAULT_HOUSING_TYPE, Limits, CitiesCenterLocation } from '../../const';
 import { CreationFormProcess } from '../../types/state';
 import { Location } from '../../types/offers-type';
+import { createOffer } from '../api-actions';
 
 const initialState: CreationFormProcess = {
+  createdOfferId: '',
   name: '',
   description: '',
   city: DEFAULT_CITY,
@@ -64,6 +66,16 @@ export const creationFormProcess = createSlice({
       state.coordinates = action.payload;
     },
 
+    resetState: (state): void => {
+      state = {...initialState};
+    },
+
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(createOffer.fulfilled, (state, action) => {
+        state.createdOfferId = action.payload.id;
+      });
   }
 });
 

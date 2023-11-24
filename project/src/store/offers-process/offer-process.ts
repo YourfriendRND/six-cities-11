@@ -39,7 +39,7 @@ export const offerProcess = createSlice({
       .addCase(fetchOffers.pending, (state) => {
         state.isOffersLoading = true;
       })
-      .addCase(fetchOffers.fulfilled , (state, action) => {
+      .addCase(fetchOffers.fulfilled, (state, action) => {
         state.offers = action.payload;
         state.isOffersLoading = false;
         state.isOfferLoaded = true;

@@ -46,6 +46,7 @@ export type PublishedProcess = {
 }
 
 export type CreationFormProcess = {
+  createdOfferId: string;
   name: string;
   description: string;
   city: string;
