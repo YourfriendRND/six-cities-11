@@ -41,7 +41,7 @@ export type ReviewProcess = {
 };
 
 export type PublishedProcess = {
-  myOffers: Offer[];
+  myOffers: Offer[] | null;
   isCreationFormOpen: boolean;
 }
 

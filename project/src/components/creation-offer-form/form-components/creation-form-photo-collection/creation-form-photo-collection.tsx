@@ -9,16 +9,10 @@ const CreationFormPhotoCollection = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const photoCollection = useAppSelector(getPhotoCollection);
 
-  // eslint-disable-next-line no-console
-  console.log(photoCollection);
-
   const handlePhotoCollectionChange = (evt: ChangeEvent<HTMLInputElement>, photoIdx: number): void => {
     if (evt.target.files) {
       const updatedPhotoCollection = [...photoCollection];
       updatedPhotoCollection[photoIdx] = evt.target.files[0];
-
-      // eslint-disable-next-line no-console
-      console.log(updatedPhotoCollection);
       dispatch(setPhotos(updatedPhotoCollection));
     }
   };

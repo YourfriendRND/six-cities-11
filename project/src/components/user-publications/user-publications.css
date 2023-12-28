@@ -1,6 +1,6 @@
 .published {
   padding: 0 15px 93px;
-  border-bottom: 2px solid rgba(222,222,222,.5);
+  border-bottom: 2px solid rgba(222, 222, 222, .5);
 }
 
 .published-title {
@@ -11,4 +11,13 @@
   font-weight: 700;
   font-style: oblique;
   text-align: center;
+}
+
+.published__content-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.published__content-wrapper .place-card:nth-child(n) {
+  justify-self: center;
 }
